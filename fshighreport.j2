@@ -1,57 +1,38 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
+ <title> File System Utilization Report</title>
 </head>
-
 <body>
-
-<title> File System Utilization Report</title>
-
-<h1> Linux FS Report </h1> <table border="1">
-
+<h1> Linux FS Report </h1> 
+<table border="1">
 <tr>
-
-</tr (X for
-
 <th>Server</th>
-
-<th>Filesystemc/th> <th>Size</th>
-
-<th>Used</th> <th>Available</th>
-
+<th>Filesystemc/th>
+<th>Size</th>
+<th>Used</th>
+<th>Available</th>
 <th>UseXc/th>
-
 <th>Mounted on</th>
+</tr>
+{% for host in groups['osvalidation'] %}
+    {% set host_facts = hostvars[host].fs_facts.stdout_lines %}
+    {% for fs in host_facts[1:] %}
+         {% set fields = fs.split() %}
+         {% if '40' | int < fields[4][:-1] | int %}
 
-host in groups['osvalidation']) host facts hostvars[host].fs_facts.stdout lines %)
-
-(set
-
-(for fs in host facts[1:] )
-
-Xset fieldsfs.split() ) if 40' [int fields[4][1-1] | int $}
-
-(
-
-<tr> <td>((host}}</td>
-
-<td>((fields[0] }}</td> <td>{{ flelds[1]))</td>
-
-<td>((fields[2] }}</td>
-
-<td>((fields[3] }}</td>
-
-<td>(( fields[4] }}</td> <td>((fields[5] }}</td> </tr
-
-( ( endfor (endfor %)
-
-endif $) %)
-
-I
-
+        <tr> 
+        <td>((host}}</td>
+      <td>((fields[0] }}</td>
+      <td>{{ flelds[1]))</td> 
+      <td>((fields[2] }}</td>
+      <td>((fields[3] }}</td> 
+      <td>(( fields[4] }}</td>
+      <td>((fields[5] }}</td>
+      </tr
+    {% endif %}
+    {% endfor %}
+{% endfor %}
 </table>
-
-</body> </html>
+</body> 
+</html>
