@@ -1,0 +1,20 @@
+---
+- name: FS Utilization Report hosts: osvalidation
+
+gather facts: yes
+
+taska:
+
+name: Get FS facts shell: df -TPh egrep -vi "tmpfs|shmfs"
+
+register: fs facts
+
+name: J2 Report template:
+
+src: fa high report.j2
+
+dest: /ansible/playbooks/ansible-playbooks-
+
+03/reports/report.html
+
+delegate to: localhost
